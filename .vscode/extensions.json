@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "foam.foam-vscode",            // Notizen & Wiki-Links
+    "pomdtr.excalidraw-editor",    // Skizzen & Zeichnungen
+    "yzhang.markdown-all-in-one",  // Besseres Markdown-Handling
+  ]
+}
