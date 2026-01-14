@@ -38,6 +38,8 @@ Ziel ist die Entwicklung einer eigenständigen Webanwendung mit folgenden Kernfu
 - Interaktionsfunktionen wie Feedback, Likes und Dislikes für Collections  
 - Feedback-Bereich für veröffentlichte Collections  
 - Suchfunktion für Collections und Kuratoren  
+- Optional: Automatisierte, regelmäßige Abfrage angebundener YouTube-Kanäle auf neue Veröffentlichungen inklusive anschließender regelbasierter Filterung
+- Optional: Manuell kuratierte Collections ohne automatisierte Aktualisierung
 
 Nicht Ziel dieses Projekts ist:
 
