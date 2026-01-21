@@ -13,7 +13,9 @@ Die primäre Datenquelle stellt die YouTube Data API v3 (REST) dar. Über diese 
 
 Damit ist sowohl eine allgemeine Suche (z. B. nach Kanälen oder Videos) als auch eine kanalspezifische Abfrage technisch möglich. Diese Funktionalität bildet eine wesentliche Grundlage für die geplante Suche nach YouTube-Kanälen, Videos sowie öffentlich verfügbaren Vico-Collections und Kuratoren innerhalb einer gemeinsamen Suchoberfläche.
 
-Neben der Data API existieren URL-basierte Atom- bzw. RSS-Feeds, über die sich neu veröffentlichte Videos eines Kanals abrufen lassen. Diese Schnittstellen gelten jedoch als *Legacy*-Lösungen, werden nicht mehr aktiv weiterentwickelt und sind nur eingeschränkt dokumentiert. Aufgrund dieser Rahmenbedingungen eignen sie sich höchstens als optionale Ergänzung, nicht jedoch als primäre oder zukunftssichere Datenquelle.
+Neben der Data API existieren URL-basierte Atom- bzw. RSS-Feeds, über die sich neu veröffentlichte Videos eines Kanals abrufen lassen. Diese Schnittstellen gelten jedoch als *Legacy*-Lösungen, werden nicht mehr aktiv weiterentwickelt und sind nur eingeschränkt dokumentiert. Aufgrund dieser Rahmenbedingungen eignen sie sich höchstens als optionale Ergänzung, nicht jedoch als primäre oder zukunftssichere Datenquelle. 
+
+Scraping von Daten ist generell verboten.
 
 Eine funktionale Einschränkung der YouTube Data API besteht darin, dass keine explizite Filtermöglichkeit für YouTube Shorts angeboten wird. Über den Parameter `type` kann lediglich zwischen Videos, Kanälen und Playlists unterschieden werden. Eine differenzierte Trennung zwischen regulären Videos und Shorts ist nicht vorhanden.
 
@@ -43,7 +45,7 @@ Demgegenüber sind API-Zugriffe zur strukturierten Abfrage bekannter Ressourcen 
 
 Schreibende API-Operationen, wie etwa das API-basierte Abonnieren von Kanälen (`subscriptions.insert`), verursachen Kosten von 50 Einheiten pro Aktion und sind zusätzlich mit erhöhtem Compliance- und OAuth-Aufwand verbunden. Solche Funktionen sind für den aktuellen Projektumfang von Vico nicht vorgesehen.
 
-Für Vico bedeutet dies, dass innerhalb der nächsten 12 Monate von einem festen Tageskontingent von 10.000 Einheiten auszugehen ist. Um dieses effizient zu nutzen, ist es erforderlich, API-Anfragen gezielt zu minimieren, Ergebnisse zwischenzuspeichern und auf wiederholte Suchanfragen gegen die YouTube API weitgehend zu verzichten.
+Für Vico bedeutet dies, dass bis zur einer API-Compliance-Prüfung (die beantragt werden muss) von einem festen Tageskontingent von 10.000 Einheiten auszugehen ist. Um dieses effizient zu nutzen, ist es erforderlich, API-Anfragen gezielt zu minimieren, Ergebnisse zwischenzuspeichern und auf wiederholte Suchanfragen gegen die YouTube API weitgehend zu verzichten.
 
 Insbesondere sollte die Suchfunktion der YouTube Data API nicht als primärer Mechanismus für wiederholte Abfragen eingesetzt werden. Stattdessen ist vorgesehen, bekannte Kanäle und zugehörige Metadaten lokal zu persistieren und Abfragen – soweit möglich – auf Basis der eigenen Datenbank durchzuführen. Die YouTube API dient dabei primär zur initialen Erfassung neuer Quellen sowie zur regelmäßigen Aktualisierung bereits bekannter Inhalte.
 
@@ -88,6 +90,37 @@ Dieser Aspekt ist insbesondere für die langfristige Wartbarkeit relevant, stell
 
 ---
 
+#### Umgang mit YouTube-Daten und -Inhalten
+
+Audiovisuelle Inhalte dürfen nicht für eine Offline-Wiedergabe verfügbar gemacht werden. Vico darf daher keine Videos herunterladen, importieren, sichern oder anderweitig speichern.
+
+Ein weiterer zentraler Punkt ist, die Nutzung der YouTube API nicht in einer Weise einzusetzen, die Urheberrechtsverletzungen ermöglicht oder deren Verbreitung fördert. Da Vico Inhalte lediglich filtert und kuratiert, ist keine automatische Inhaltsprüfung vorgesehen. Dennoch sollte ein Mechanismus existieren, um potenziell problematische Collections zu melden und nachvollziehbar zu moderieren. Eine naheliegende Lösung ist eine Melde-Funktion, über die Collections markiert und für eine manuelle Prüfung in ein internes Review-/Ticketing-Verfahren überführt werden. Eine automatisierte Filterung von urheberrechtlich geschützten Inhalten (z. B. komplette Filme) ist dagegen nur eingeschränkt zuverlässig umsetzbar und birgt das Risiko, legitime Inhalte wie Parodien oder Memes fälschlich zu blockieren.
+
+Da Vico aufgrund des begrenzten Tageskontingents YouTube-Metadaten (z. B. Titel, Beschreibung, Kanal- und Video-Details) in einer eigenen Datenbank zwischenspeichert, muss sichergestellt werden, dass nicht autorisierte API-Daten spätestens nach 30 Kalendertagen entweder aktualisiert oder gelöscht werden. Diese Einschränkung wirkt sich unmittelbar auf die Refresh-Strategie aus, da regelmäßige Aktualisierungen zusätzliche API-Anfragen verursachen und somit Kontingent verbrauchen.
+
+Darüber hinaus dürfen API-Daten nicht zusammengefasst werden. Für Vico bedeutet dies, dass keine Funktionen vorgesehen sind, die über mehrere Kanäle hinweg aggregierte YouTube-Kennzahlen ausgeben, z. B. „Collection hat insgesamt 12.345.678 Views“ oder „Gesamtreichweite / Total Likes / Total Subscriber Reach“. Solange keine collectionweite Summierung oder vergleichbare Aggregation von Metriken oder Insights erfolgt, besteht kein Verstoss gegen die Richtlinie.
+
+Die Richtlinien zur Nutzung autorisierter Daten (z. B. OAuth-basierte Zugriffe und schreibende Aktionen) sind für den aktuellen Projektstand nicht relevant, da Vico keine Funktionen implementiert, die im Auftrag eines Nutzers Aktionen auf YouTube ausführen oder autorisierte Nutzerdaten abrufen.
+
+Beim Einbetten von Videos mit dem Status *Made for Kids (MFK)* müssen die Vorgaben aus dem entsprechenden Leitfaden berücksichtigt werden. Insbesondere ist sicherzustellen, dass Tracking deaktiviert ist und jegliche Datenerhebung im Zusammenhang mit dem eingebetteten Player den jeweils anwendbaren Gesetzen entspricht. Auch wenn Vico selbst kein Tracking implementiert, kann der eingebettete Player dennoch Daten an YouTube übertragen. Unter „anwendbare Gesetze“ fallen in diesem Kontext insbesondere die DSGVO sowie Cookie- und Tracking-Regelungen (TTDSG/ePrivacy) und – je nach Ausrichtung – ergänzende Vorgaben zum Jugend- und Kinderschutz.
+
+---
+
+#### Monitoring und Audits
+
+YouTube behält sich das Recht vor, den Zugriff auf die YouTube API-Dienste sowie die Nutzung durch API-Clients zu untersuchen, zu überwachen und zu prüfen. Dazu kann YouTube unter anderem Nutzer von API-Clients befragen oder im Rahmen eines Audits Zugriff auf die produktive Version des API-Clients verlangen. Entsprechende Hinweise oder Compliance-Anfragen müssen berücksichtigt und innerhalb der vorgegebenen Fristen beantwortet werden. Bei ausbleibender Reaktion kann YouTube den Zugriff auf die API-Dienste einschränken oder deaktivieren.
+
+---
+
+#### Zusätzliche Verbote
+
+YouTube untersagt die Nutzung der API-Dienste, um YouTube-Anwendungen nachzubauen, zu replizieren oder als Ersatz für die Plattform bereitzustellen. Für Vico ist daher sicherzustellen, dass die Anwendung nicht als alternative YouTube-Oberfläche ohne eigenständigen Mehrwert implementiert wird.
+
+Vico ist im aktuellen Projektumfang als ergänzendes Kurations- und Filtersystem konzipiert. Der Fokus liegt auf der strukturierten Bündelung und thematischen Filterung von Inhalten über Collections. Funktionen, die YouTube als Plattform ersetzen oder zentrale Nutzerfunktionen nachbilden würden, sind nicht vorgesehen. Insbesondere werden keine Aktionen im Namen des Nutzers ausgeführt.
+
+
+
+
 ### Implementierung von YouTube-Funktionen
 
 Vico ist verpflichtet, die Anforderungen an die Mindestfunktionalität für YouTube API-Dienste (Required Minimum Functionality, RMF) einzuhalten:
@@ -96,7 +129,7 @@ https://developers.google.com/youtube/terms/required-minimum-functionality
 Diese Anforderungen definieren, in welcher Form YouTube-Inhalte dargestellt oder eingebettet werden dürfen und welche Einschränkungen unzulässig sind. Änderungen an diesen Anforderungen werden ebenfalls im Änderungsverlauf der Nutzungsbedingungen dokumentiert.
 
 
-#### Anforderungen an die Mindestfunktionalität
+### Anforderungen an die Mindestfunktionalität
 
 Sofern der YouTube-Player in Vico eingebettet wird, müssen die für die Wiedergabe von Videos definierten Regeln eingehalten werden, insbesondere in Bezug auf:
 - korrekte Identifikation des API-Clients (z. B. über HTTP-Referer),
@@ -113,4 +146,43 @@ Für den aktuellen Projektstand ist vorgesehen, Vico ausschließlich als lesende
 
 Durch diese bewusste funktionale Einschränkung entfällt der Großteil der streng regulierten YouTube-API-Anforderungen. Die verbleibenden Vorgaben sind technisch umsetzbar und stellen zum jetzigen Zeitpunkt kein Risiko für die Machbarkeit des Projekts dar.
 
+
+## Fazit zur technischen Umsetzbarkeit
+
+Die Umsetzung von Vico ist technisch **grundsätzlich machbar**. Die Kernidee, YouTube-Inhalte über kanalbasierte Metadaten zu erfassen, lokal zu persistieren und anschließend regelbasiert zu filtern/kuratieren, lässt sich sauber mit der YouTube Data API v3 abbilden.
+
+Die Machbarkeit hängt dabei weniger an „ob es geht“, sondern an klaren technischen Vorgaben:
+- API-Kontingente effizient nutzen
+- keine verbotenen Datenbeschaffungswege (Scraping)
+- YouTube-Compliance einhalten
+- Shorts-Erkennung nur mit Link-Parsing möglich
+
+### Was sicher umsetzbar ist
+Folgende Kernfunktionen sind ohne besondere Risiken realisierbar:
+
+- Collections anlegen und verwalten (privat/öffentlich)
+- Kanäle zu Collections hinzufügen
+- Regelbasierte Filterung anhand Titel/Beschreibung (Keywords, Ausschlussregeln)
+- Lokale, zeitlich limitierte, Speicherung von Kanal- und Video-Metadaten
+- Suche in Vico primär über eigene Datenbank (nicht dauerhaft über die YouTube-Suche)
+- Regelmäßige Aktualisierung bereits bekannter Kanäle über günstige API-Endpunkte
+
+Damit entsteht ein eigenständiger Mehrwert (Kuration/Filter), ohne YouTube als Plattform „nachzubauen“.
+
+### Einschränkungen
+
+#### 1) Kontingent-Engpass bei der YouTube-Suche
+Die API-Suche (`search.list`) ist sehr teuer und skaliert schlecht für "ständiges Stöbern". Die Konsequenz daraus ist, keine Suchfunktion ueber die Youtube Data API bereitstellen zu können, bis das taegliche Kontigentvolumen erhöht werden kann. 
+
+#### 2) Compliance- und Datenhaltungsregeln erzwingen Refresh-Strategie
+Wenn Metadaten zwischengespeichert werden, muss Vico daraus eine Refresh-/Expiry-Strategie ableiten.
+Konsequenzen:
+- Geplante Jobs (Scheduler) + definierte time-to-live von Metadaten
+- Dokumentierte Datennutzung + saubere Trennung zwischen YouTube-Daten und Vico-eigenen Daten
+
+
+### Hauptrisiken
+- Quota-Limits bei unkontrollierter Suchnutzung oder zu aggressiven Refresh-Zyklen
+- Policy-Änderungen seitens YouTube -> erfordert Monitoring
+- Bei öffentlichen Collections: Moderation/Meldewege nötig (inhaltlich/urheberrechtlich problematische Kuratierung)
 
