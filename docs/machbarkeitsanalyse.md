@@ -195,4 +195,4 @@ Ein vollständiger Abruf aller Videos eines Kanals erfordert daher:
 - Quota-Limits bei unkontrollierter Suchnutzung oder zu aggressiven Refresh-Zyklen
 - Policy-Änderungen seitens YouTube -> erfordert Monitoring
 - Bei öffentlichen Collections: Moderation/Meldewege nötig (inhaltlich/urheberrechtlich problematische Kuratierung)
-- Der Abruf aller Kanal-Videos ist technisch möglich, aber nicht one-shot. Ingestion-Logik muss zustandsbehaftet sein (letzter Stand, letztes bekanntes Video) und inkrementell arbeiten, um Quota-Verbrauch und Laufzeit zu kontrollieren.
+- Der Abruf aller Kanal-Videos ist technisch möglich, aber nicht one-shot. Ingestion-Logik muss zustandsbehaftet sein (letzter Stand, letztes bekanntes Video) und inkrementell arbeiten, um Quota-Verbrauch und Laufzeit zu kontrollieren. Insbesondere bei Kanälen mit sehr vielen Videos entstehen durch Pagination erhebliche zusätzliche API-Kosten.
