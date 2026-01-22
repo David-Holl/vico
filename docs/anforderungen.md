@@ -5,7 +5,9 @@ Basierend auf der technischen [[machbarkeitsanalyse]] und den gelisteten Feature
 ## Ingestion / Sync Service
 
 Aufgabe: Holt Daten über APIs, normalisiert, schreibt in Storage
+
 Anforderungen:
+- [[yt_connector]]
 
 ## Data Storage
 
