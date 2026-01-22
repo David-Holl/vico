@@ -180,9 +180,16 @@ Konsequenzen:
 - Geplante Jobs (Scheduler) + definierte time-to-live von Metadaten
 - Dokumentierte Datennutzung + saubere Trennung zwischen YouTube-Daten und Vico-eigenen Daten
 
+#### 3) Ergebnis- und Paging-Limitierungen beim Abruf von Kanal-Videos
+YouTube-API-Endpunkte liefern Videos nur **paginiert** und mit einer festen Obergrenze pro Request (max. 50 Einträge).  
+Ein vollständiger Abruf aller Videos eines Kanals erfordert daher:
+- Nutzung der kanalgebundenen *Uploads-Playlist* statt freier Suche
+- Iteratives Paging über `nextPageToken`
+- Abbruchkriterien (z. B. bekanntes ältestes Video erreicht), um unnötige Requests zu vermeiden
+
 
 ### Hauptrisiken
 - Quota-Limits bei unkontrollierter Suchnutzung oder zu aggressiven Refresh-Zyklen
 - Policy-Änderungen seitens YouTube -> erfordert Monitoring
 - Bei öffentlichen Collections: Moderation/Meldewege nötig (inhaltlich/urheberrechtlich problematische Kuratierung)
-
+- Der Abruf aller Kanal-Videos ist technisch möglich, aber nicht one-shot. Ingestion-Logik muss zustandsbehaftet sein (letzter Stand, letztes bekanntes Video) und inkrementell arbeiten, um Quota-Verbrauch und Laufzeit zu kontrollieren.
