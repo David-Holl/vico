@@ -155,14 +155,17 @@ Die Machbarkeit hängt dabei weniger an „ob es geht“, sondern an klaren tech
 - API-Kontingente effizient nutzen
 - keine verbotenen Datenbeschaffungswege (Scraping)
 - YouTube-Compliance einhalten
-- Shorts-Erkennung nur mit Link-Parsing möglich
+- Shorts-Erkennung aktuell nur mit Link-Parsing möglich
+- Eine eigene Kategorie für "Shorts" ist im Endpunkt `videoCategories` vorhanden, diese ist jedoch aktuell nicht zuweisbar (`assignable=false`) und kann daher aktuell nicht zur Kategorisierung von Videos verwendet werden.
+
+
 
 ### Was sicher umsetzbar ist
 Folgende Kernfunktionen sind ohne besondere Risiken realisierbar:
 
 - Collections anlegen und verwalten (privat/öffentlich)
 - Kanäle zu Collections hinzufügen
-- Regelbasierte Filterung anhand Titel/Beschreibung (Keywords, Ausschlussregeln)
+- Regelbasierte Filterung anhand Titel/Beschreibung und anderen Attributen
 - Lokale, zeitlich limitierte, Speicherung von Kanal- und Video-Metadaten
 - Suche in Vico primär über eigene Datenbank (nicht dauerhaft über die YouTube-Suche)
 - Regelmäßige Aktualisierung bereits bekannter Kanäle über günstige API-Endpunkte
