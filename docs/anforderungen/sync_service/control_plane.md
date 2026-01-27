@@ -30,9 +30,10 @@ Das Control Plane stellt Funktionen bereit, die:
   - Tracing-IDs mitgeben (für Observability)
 
 - Fehler- und Quota-Verhalten steuern
-  - Retry-Policy auf Orchestrierungsebene
-  - Quota-/Budget-Grenzen berücksichtigen 
-  - Dead-letter / Quarantine für wiederholt fehlschlagende Jobs (mit manueller Reaktivierung)
+  - Connector-Fehler auswerten und klassifizieren
+  - Orchestrierungsentscheidungen ableiten
+  - Status und Entscheidungen für Observability erfassen
+
 
 ---
 
