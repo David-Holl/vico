@@ -37,6 +37,7 @@ Zur zukünftigen Erweiterbarkeit (z. B. Vimeo) muss der Connector ein gemeinsame
 - Rückgaben erfolgen als:
   - rohe JSON-Responses
   - aggregierte JSON-Listen bei Endpunkten mit limitierter Ergebnisanzahl pro Request
+  - normalisierte Fehlerinformationen zur Weiterverarbeitung
 
 ---
 
