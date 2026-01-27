@@ -7,7 +7,7 @@ Basierend auf der technischen [[machbarkeitsanalyse]] und den gelisteten Feature
 Aufgabe: Holt Daten über APIs, normalisiert, schreibt in Storage
 
 Anforderungen:
-- [[sync_service/yt_connector]]
+- [[yt_connector]]
 - [[sync_service/control_plane]]
 
 ## Data Storage
