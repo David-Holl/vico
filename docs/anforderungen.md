@@ -9,6 +9,7 @@ Aufgabe: Holt Daten über APIs, normalisiert, schreibt in Storage
 Anforderungen:
 - [[yt_connector]]
 - [[sync_service/control_plane]]
+- [[data_plane]]
 
 ## Data Storage
 
