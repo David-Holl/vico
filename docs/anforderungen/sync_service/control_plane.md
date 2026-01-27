@@ -21,6 +21,7 @@ Das Control Plane stellt Funktionen bereit, die:
 - Refresh Orchestrierung
   - Refresh-Jobs planen (Zeitplan, TTL/Expiry, Prioritäten)
   - Refresh-Jobs auslösen und deren Status verwalten
+  - Cleanup-Jobs planen und anstoßen (zur Einhaltung von Datenaktualität)
 
 - Connector-Aufrufe kapseln
   - die sichtbaren Methoden des jeweiligen Connectors aufrufen
