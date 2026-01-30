@@ -20,17 +20,19 @@ exclude = [".venv", ".git"]
 
 [tool.ruff.lint]
 select = [
-    # pycodestyle
+    # pycodestyle: classic PEP8 Errors
     "E",
-    # Pyflakes
+    # pycodestyle warnings: trailing whitespace, whitespace-only blank lines, ...
+    "W",
+    # Pyflakes: unused imports and vars; undefined or double definitions
     "F",
-    # pyupgrade
+    # pyupgrade: modernized patterns (i.e. f-strings instead of .format())
     "UP",
-    # flake8-bugbear
+    # flake8-bugbear: prevent typical pitfalls
     "B",
-    # flake8-simplify
+    # flake8-simplify: simplification of code; reducing boilerplate
     "SIM",
-    # isort
+    # isort: import sort
     "I"
 ]
 ignore = []
@@ -38,12 +40,12 @@ ignore = []
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
-line-ending = "auto"
+line-ending = "auto" # Newline style, normalize mixed endings
 
 [tool.mypy]
 python_version = "3.13"
 strict = true
-pretty = true
+pretty = true # human readable shell output 
 show_error_codes = true
 files = ["."]
 exclude = [
