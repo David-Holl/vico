@@ -9,6 +9,8 @@ dependencies = []
 [dependency-groups]
 dev = [
     "mypy>=1.19.1",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
     "ruff>=0.14.14",
 ]
 
@@ -42,7 +44,38 @@ pretty = true # human readable shell output
 show_error_codes = true
 files = ["."]
 exclude = [
-  '^\.venv/',
-  '^build/',
-  '^dist/',
+    '^\.venv/',
+    '^build/',
+    '^dist/',
 ]
+
+[tool.pytest.ini_options]
+minversion = "9.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+addopts = [
+    "-ra",                 # summary
+    "--strict-markers",
+    "--strict-config"
+]
+markers = [
+    "unit: fast, isolated unit tests (no I/O)",
+    "io: tests that perform I/O (db, filesystem)",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["apps/backend_api", "apps/sync_service", "packages/connectors",]       
+omit = [
+    "**/tests/**",
+    ".venv/**",
+    "apps/web/**",
+    "infra/**",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+fail_under = 85         
+
