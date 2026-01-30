@@ -1,0 +1,35 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.14 # Ruff version.
+    hooks:
+      - id: ruff-check # Run the linter.
+        args: [ --fix ]
+        stages: [pre-commit]
+      - id: ruff-format # Run the formatter.
+        stages: [pre-commit]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.19.1
+    hooks:
+      - id: mypy
+        args: [--config-file=pyproject.toml] # use project-settings
+        stages: [pre-commit]
+        additional_dependencies: [pytest]
+
+  - repo: local
+    hooks:
+      - id: pytest-quick
+        name: pytest + unit tests
+        entry: uv run pytest --quiet -m "unit"
+        language: system
+        pass_filenames: false # use test discovery
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      - id: pytest-all
+        name: pytest-all + coverage
+        entry: uv run pytest --quiet --cov=apps/backend_api --cov=apps/sync_service --cov=packages/connectors --cov-report=term-missing --cov-report=xml
+        language: system
+        pass_filenames: false
+        stages: [pre-push]

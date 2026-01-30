@@ -7,7 +7,13 @@ requires-python = ">=3.13"
 dependencies = []
 
 [dependency-groups]
-dev = ["mypy>=1.19.1", "pytest>=9.0.2", "pytest-cov>=7.0.0", "ruff>=0.14.14"]
+dev = [
+    "mypy>=1.19.1",
+    "pre-commit>=4.5.1",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.0.0",
+    "ruff>=0.14.14",
+]
 
 [tool.ruff]
 line-length = 88
@@ -35,16 +41,19 @@ line-ending = "auto"   # Newline style, normalize mixed endings
 [tool.mypy]
 python_version = "3.13"
 strict = true
-pretty = true # human readable shell output 
+pretty = true                               # human readable shell output 
 show_error_codes = true
 files = ["."]
 exclude = ['^\.venv/', '^build/', '^dist/']
 
 [tool.pytest.ini_options]
 minversion = "9.0"
-testpaths = ["tests"]
+testpaths = [
+    "apps/backend_api/tests",
+    "apps/sync_service/tests",
+    "packages/connectors/tests",
+]
 python_files = ["test_*.py"]
-
 addopts = [
     "-ra", # show summary
     "--strict-markers",
