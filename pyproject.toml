@@ -7,12 +7,7 @@ requires-python = ">=3.13"
 dependencies = []
 
 [dependency-groups]
-dev = [
-    "mypy>=1.19.1",
-    "pytest>=9.0.2",
-    "pytest-cov>=7.0.0",
-    "ruff>=0.14.14",
-]
+dev = ["mypy>=1.19.1", "pytest>=9.0.2", "pytest-cov>=7.0.0", "ruff>=0.14.14"]
 
 [tool.ruff]
 line-length = 88
@@ -22,20 +17,20 @@ exclude = [".venv", ".git"]
 
 [tool.ruff.lint]
 select = [
-    "E", # pycodestyle: classic PEP8 Errors
-    "W", # pycodestyle warnings: trailing whitespace, whitespace-only blank lines, ...
-    "F", # Pyflakes: unused imports and vars; undefined or double definitions
-    "UP", # pyupgrade: modernized patterns (i.e. f-strings instead of .format())
-    "B", # flake8-bugbear: prevent typical pitfalls
+    "E",   # pycodestyle: classic PEP8 Errors
+    "W",   # pycodestyle warnings: trailing whitespace, whitespace-only blank lines, ...
+    "F",   # Pyflakes: unused imports and vars; undefined or double definitions
+    "UP",  # pyupgrade: modernized patterns (i.e. f-strings instead of .format())
+    "B",   # flake8-bugbear: prevent typical pitfalls
     "SIM", # flake8-simplify: simplification of code; reducing boilerplate
-    "I" # isort: import sort
+    "I",   # isort: import sort
 ]
 ignore = []
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
-line-ending = "auto" # Newline style, normalize mixed endings
+line-ending = "auto"   # Newline style, normalize mixed endings
 
 [tool.mypy]
 python_version = "3.13"
@@ -43,11 +38,7 @@ strict = true
 pretty = true # human readable shell output 
 show_error_codes = true
 files = ["."]
-exclude = [
-    '^\.venv/',
-    '^build/',
-    '^dist/',
-]
+exclude = ['^\.venv/', '^build/', '^dist/']
 
 [tool.pytest.ini_options]
 minversion = "9.0"
@@ -55,9 +46,9 @@ testpaths = ["tests"]
 python_files = ["test_*.py"]
 
 addopts = [
-    "-ra",                 # summary
+    "-ra", # show summary
     "--strict-markers",
-    "--strict-config"
+    "--strict-config",
 ]
 markers = [
     "unit: fast, isolated unit tests (no I/O)",
@@ -66,16 +57,10 @@ markers = [
 
 [tool.coverage.run]
 branch = true
-source = ["apps/backend_api", "apps/sync_service", "packages/connectors",]       
-omit = [
-    "**/tests/**",
-    ".venv/**",
-    "apps/web/**",
-    "infra/**",
-]
+source = ["apps/backend_api", "apps/sync_service", "packages/connectors"]
+omit = ["**/tests/**", ".venv/**", "apps/web/**", "infra/**"]
 
 [tool.coverage.report]
 show_missing = true
 skip_covered = true
-fail_under = 85         
-
+fail_under = 85
