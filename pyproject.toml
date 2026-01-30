@@ -20,20 +20,13 @@ exclude = [".venv", ".git"]
 
 [tool.ruff.lint]
 select = [
-    # pycodestyle: classic PEP8 Errors
-    "E",
-    # pycodestyle warnings: trailing whitespace, whitespace-only blank lines, ...
-    "W",
-    # Pyflakes: unused imports and vars; undefined or double definitions
-    "F",
-    # pyupgrade: modernized patterns (i.e. f-strings instead of .format())
-    "UP",
-    # flake8-bugbear: prevent typical pitfalls
-    "B",
-    # flake8-simplify: simplification of code; reducing boilerplate
-    "SIM",
-    # isort: import sort
-    "I"
+    "E", # pycodestyle: classic PEP8 Errors
+    "W", # pycodestyle warnings: trailing whitespace, whitespace-only blank lines, ...
+    "F", # Pyflakes: unused imports and vars; undefined or double definitions
+    "UP", # pyupgrade: modernized patterns (i.e. f-strings instead of .format())
+    "B", # flake8-bugbear: prevent typical pitfalls
+    "SIM", # flake8-simplify: simplification of code; reducing boilerplate
+    "I" # isort: import sort
 ]
 ignore = []
 
