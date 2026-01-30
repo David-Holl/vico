@@ -44,7 +44,7 @@ strict = true
 pretty = true                               # human readable shell output 
 show_error_codes = true
 files = ["."]
-exclude = ['^\.venv/', '^build/', '^dist/']
+exclude = ['^\.venv/', '^build/', '^dist/', '^apps/.*/tests/']
 
 [tool.pytest.ini_options]
 minversion = "9.0"
