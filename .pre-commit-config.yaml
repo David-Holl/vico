@@ -31,6 +31,8 @@ repos:
         language: system
         pass_filenames: false # use test discovery
         stages: [pre-commit]
+        env:
+          PYTHONPATH: .
 
   - repo: local
     hooks:
@@ -40,3 +42,5 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-push]
+        env:
+          PYTHONPATH: .
