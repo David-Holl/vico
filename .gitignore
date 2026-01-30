@@ -15,4 +15,8 @@ wheels/
 # Mypy-generated files
 .mypy_cache
 
+# Pytest-generated files
+.pytest_cache
+.coverage
+
 
