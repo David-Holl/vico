@@ -20,4 +20,5 @@ wheels/
 .coverage
 coverage.xml
 
-
+# dbml generatedd files
+*.dbdiagram

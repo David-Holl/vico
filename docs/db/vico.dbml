@@ -1,0 +1,138 @@
+Table vico.user{
+    id uint [pk, not null, unique]
+    name varchar(63) [not null]
+    email varchar(255) [not null, unique]
+    password_hash varchar(255) [not null]
+    created datetime
+}
+
+Table vico.curator{
+    id uint [pk, not null, unique]
+    user_id uint [not null]
+    curator_role_id uint [not null]
+    collection_id uint [not null]
+}
+
+Table vico.curator_role{
+    id uint [pk, not null, unique]
+    name vico.role_name
+}
+
+enum vico.role_name {
+    owner
+    moderator
+    contributor
+}
+
+Ref: vico.curator.curator_role_id > vico.curator_role.id
+Ref: vico.curator.collection_id > vico.collection.id
+Ref: vico.curator.user_id > vico.user.id
+
+Table vico.subscription{
+    id uint [pk, not null, unique]
+    user_id uint [not null]
+    collection_id uint [not null]
+    since datetime 
+
+    Indexes {
+            (user_id, collection_id) [unique] 
+        }
+}
+
+Ref: vico.subscription.user_id > vico.user.id
+Ref: vico.subscription.collection_id > vico.collection.id
+
+
+Table vico.collection{
+    id uint [pk, not null, unique]
+    name varchar(127) [not null]
+    description text
+    created datetime [not null]
+    updated datetime
+    public bool [not null, default: 0]
+}
+
+
+Table vico.collection_classification{
+    id uint [pk, not null, unique]
+    collection_id uint [not null]
+    subcategory_id uint [not null]
+}
+
+Ref: vico.collection_classification.collection_id > vico.collection.id
+Ref: vico.collection_classification.subcategory_id > vico.subcategory.id
+
+Table vico.category{
+    id uint [pk, not null, unique]
+    name varchar(63) [not null]
+    description text
+}
+
+Table vico.subcategory{
+    id uint [pk, not null, unique]
+    name varchar(63) [not null]
+    description text
+    category_id uint [not null]
+}
+Ref:  vico.subcategory.category_id > vico.category.id
+
+Table vico.channel{
+    id uint [pk, not null, unique]
+    metadata_date datetime [not null]
+    platform platform_name
+    platform_channel_id varchar(255) [not null]
+    name varchar(127) [not null]
+    thumbnail_url varchar(511)
+    created datetime
+    
+}
+
+enum platform_name {
+    youtube
+}
+
+Table vico.video{
+    id uint [pk, not null, unique]
+    metadata_date datetime [not null]
+    channel_id uint [not null]
+    platform_video_id varchar(255) [not null]
+    title varchar(127)
+    description text
+    type video_type
+    thumbnail_url varchar(511)
+    created datetime
+    updated datetime
+    duration uint
+}
+
+enum video_type{
+    clip // vico name fuer youtube shorts, tiktoks
+    video
+}
+
+Ref: vico.video.channel_id > vico.channel.id
+
+Table vico.collection_filter{
+    id uint [pk, not null, unique]
+    name varchar(63) [not null]
+    description text
+    pattern text
+    collection_id uint [not null]
+    channel_id uint [not null]
+    created datetime
+}
+
+Ref: vico.collection_filter.collection_id > vico.collection.id
+Ref: vico.collection_filter.channel_id > vico.channel.id
+
+Table vico.collection_items{
+    id uint [pk, not null, unique]
+    curator_id uint [not null]
+    collection_id uint [not null]
+    added datetime
+    video_id uint [not null]
+}
+
+Ref: vico.collection_items.curator_id > vico.curator.id
+Ref: vico.collection_items.collection_id > vico.collection.id
+Ref: vico.collection_items.video_id > vico.video.id
