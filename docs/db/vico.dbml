@@ -8,14 +8,15 @@ Table vico.user{
 
 Table vico.curator{
     id uint [pk, not null, unique]
-    user_id uint [not null]
-    curator_role_id uint [not null]
-    collection_id uint [not null]
+    user_id uint [not null, ref: > vico.user.id]
+    curator_role_id uint [not null, ref: > vico.curator_role.id]
+    collection_id uint [not null, ref: > vico.collection.id]
 }
 
 Table vico.curator_role{
     id uint [pk, not null, unique]
     name vico.role_name
+    description text
 }
 
 enum vico.role_name {
@@ -24,14 +25,10 @@ enum vico.role_name {
     contributor
 }
 
-Ref: vico.curator.curator_role_id > vico.curator_role.id
-Ref: vico.curator.collection_id > vico.collection.id
-Ref: vico.curator.user_id > vico.user.id
-
 Table vico.subscription{
     id uint [pk, not null, unique]
-    user_id uint [not null]
-    collection_id uint [not null]
+    user_id uint [not null, ref: > vico.user.id]
+    collection_id uint [not null, ref: > vico.collection.id]
     since datetime 
 
     Indexes {
@@ -39,8 +36,6 @@ Table vico.subscription{
         }
 }
 
-Ref: vico.subscription.user_id > vico.user.id
-Ref: vico.subscription.collection_id > vico.collection.id
 
 
 Table vico.collection{
@@ -50,17 +45,16 @@ Table vico.collection{
     created datetime [not null]
     updated datetime
     public bool [not null, default: 0]
+    thumbnail_path varchar(511)
 }
 
 
 Table vico.collection_classification{
     id uint [pk, not null, unique]
-    collection_id uint [not null]
-    subcategory_id uint [not null]
+    collection_id uint [not null, ref: > vico.collection.id]
+    subcategory_id uint [not null, ref: > vico.subcategory.id]
 }
 
-Ref: vico.collection_classification.collection_id > vico.collection.id
-Ref: vico.collection_classification.subcategory_id > vico.subcategory.id
 
 Table vico.category{
     id uint [pk, not null, unique]
@@ -72,9 +66,9 @@ Table vico.subcategory{
     id uint [pk, not null, unique]
     name varchar(63) [not null]
     description text
-    category_id uint [not null]
+    category_id uint [not null, ref: > vico.category.id]
 }
-Ref:  vico.subcategory.category_id > vico.category.id
+
 
 Table vico.channel{
     id uint [pk, not null, unique]
@@ -84,7 +78,9 @@ Table vico.channel{
     name varchar(127) [not null]
     thumbnail_url varchar(511)
     created datetime
-    
+    indexes {
+        (platform, platform_channel_id) [unique]
+        }
 }
 
 enum platform_name {
@@ -94,45 +90,80 @@ enum platform_name {
 Table vico.video{
     id uint [pk, not null, unique]
     metadata_date datetime [not null]
-    channel_id uint [not null]
+    channel_id uint [not null, ref: > vico.channel.id]
     platform_video_id varchar(255) [not null]
     title varchar(127)
     description text
-    type video_type
+    type_id uint [not null, ref: > vico.video_type.id]
     thumbnail_url varchar(511)
     created datetime
     updated datetime
     duration uint
 }
 
-enum video_type{
-    clip // vico name fuer youtube shorts, tiktoks
-    video
+Table vico.video_type{
+    id uint [pk, not null, unique]
+    name video_types [default: `video`]
 }
 
-Ref: vico.video.channel_id > vico.channel.id
+enum video_types{
+    short
+    video
+    "live-stream"
+    vod
+}
+
 
 Table vico.collection_filter{
     id uint [pk, not null, unique]
     name varchar(63) [not null]
     description text
     pattern text
-    collection_id uint [not null]
-    channel_id uint [not null]
+    collection_id uint [not null, ref: > vico.collection.id]
+    channel_id uint [not null, ref: > vico.channel.id]
     created datetime
 }
 
-Ref: vico.collection_filter.collection_id > vico.collection.id
-Ref: vico.collection_filter.channel_id > vico.channel.id
 
 Table vico.collection_items{
     id uint [pk, not null, unique]
-    curator_id uint [not null]
-    collection_id uint [not null]
+    curator_id uint [not null, ref: > vico.curator.id]
+    collection_id uint [not null, ref: > vico.collection.id]
     added datetime
-    video_id uint [not null]
+    video_id uint [not null, ref: > vico.video.id]
 }
 
-Ref: vico.collection_items.curator_id > vico.curator.id
-Ref: vico.collection_items.collection_id > vico.collection.id
-Ref: vico.collection_items.video_id > vico.video.id
+
+Table vico.collection_report{
+    id uint [pk, not null, unique]
+    reported_by uint [not null, ref: > vico.user.id]
+    reported_at datetime
+    collection_id uint [not null, ref: > vico.collection.id]
+    message varchar(511)
+    reason_id uint [not null, ref: > vico.report_reason.id]
+    status report_status [default: "pending"]
+    updated datetime
+    resolved_at datetime
+}
+
+Table vico.report_reason{
+    id uint [pk, not null, unique]
+    name report_reason
+    description text
+
+}
+
+Enum report_reason{
+    copyright
+    spam
+    inappropriate
+    wrong_category
+    harassment
+}
+
+Enum report_status{
+    pending
+    reviewed
+    dismissed
+    action_taken
+}
