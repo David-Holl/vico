@@ -125,9 +125,10 @@ Table vico.collection_filter{
 }
 
 
-Table vico.collection_items{
+Table vico.collection_items{ // gefiltert oder manuell hinzugefuegt.
     id uint [pk, not null, unique]
-    curator_id uint [not null, ref: > vico.curator.id]
+    curator_id uint [ref: > vico.curator.id]
+    filter_id uint [ref: > vico.collection_filter.id]
     collection_id uint [not null, ref: > vico.collection.id]
     added datetime
     video_id uint [not null, ref: > vico.video.id]

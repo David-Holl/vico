@@ -14,12 +14,16 @@ Anforderungen:
 ## Data Storage
 
 Aufgabe: Persistieren von Metadaten, Nutzerinformationen, Collections und Ingestion Policies
+
 Anforderungen:
+- Datenbank
+- Objekt Storage
+- Credential Storage/Vault
 
 
 ## Backend API
 
-Aufgabe: Business-Logik, Authentifizierung
+Aufgabe: Business-Logik, Authentifizierung, Suchfunktionen
 Anforderungen:
 
 ## Web App 
@@ -29,5 +33,5 @@ Anforderungen:
 
 ## DevOps
 
-Aufgabe: CI/CD, Plattform, Logging, Metrics, as usual ..., benachrichtigung bei API compliance changes, auswerten von gemeldeten collections/website feedback(!)
+Aufgabe: CI/CD, Plattform, Logging, Metrics, benachrichtigung bei API compliance changes, auswerten von gemeldeten collections/website feedback(!)
 Anforderungen:
