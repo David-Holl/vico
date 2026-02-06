@@ -9,7 +9,11 @@ Backend-seitig kommt FastAPI zum Einsatz, während im Frontend mit TypeScript un
 
 ## UI-Prototyp
 
-Der folgende Screenshot zeigt einen UI-Prototyp der Startseite für eingeloggte Nutzer.  
+>**AI Disclaimer**
+>
+>Ich bin kein Designer. Die folgenden Screenshots wurden daher mit KI-Unterstützung erstellt – konkret mit Figma Make – basierend auf meinen eigenen Skizzen.
+
+Der folgende Screenshot zeigt einen UI-Prototyp der Startseite für einen eingeloggten Beispielnutzer (Max Müller).
 Dargestellt sind die eigenen, sowie die abonnierten Video-Collections, Ziel dieser Ansicht ist ein schneller Überblick und ein direkter Einstieg.
 
 ![Startseite – Collections Übersicht](./docs/konzepte/ui/pages/Startseite.png)
