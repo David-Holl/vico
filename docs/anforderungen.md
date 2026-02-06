@@ -7,6 +7,7 @@ Basierend auf der technischen [[machbarkeitsanalyse]] und den gelisteten Feature
 Aufgabe: Holt Daten über APIs, normalisiert, schreibt in Storage
 
 Anforderungen:
+
 - [[yt_connector]]
 - [[sync_service/control_plane]]
 - [[data_plane]]
@@ -16,10 +17,11 @@ Anforderungen:
 Aufgabe: Persistieren von Metadaten, Nutzerinformationen, Collections und Ingestion Policies
 
 Anforderungen:
+
 - Datenbank
 - Objekt Storage
 - Credential Storage/Vault
-
+- Caching
 
 ## Backend API
 
