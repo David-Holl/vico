@@ -21,7 +21,7 @@ Anforderungen:
 - Datenbank
 - Objekt Storage
 - Credential Storage/Vault
-- Caching
+- Caching, Session (Valkey vs Redis)
 
 ## Backend API
 

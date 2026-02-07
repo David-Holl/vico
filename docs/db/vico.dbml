@@ -6,14 +6,25 @@ Table vico.user{
     created datetime
 }
 
-Table vico.curator{
+Table vico.membership{
     id uint [pk, not null, unique]
     user_id uint [not null, ref: > vico.user.id]
-    curator_role_id uint [not null, ref: > vico.curator_role.id]
+    member_role_id uint [not null, ref: > vico.member_role.id]
     collection_id uint [not null, ref: > vico.collection.id]
+    since datetime
+    notify bool [default:1]
+    last_viewed datetime
+    priority uint [not null, default: 0]
+    sort_index uint [not null, default: 0]
+
+    indexes { 
+        (user_id, priority, sort_index)
+        (user_id, collection_id) [unique] 
+    }
+
 }
 
-Table vico.curator_role{
+Table vico.member_role{
     id uint [pk, not null, unique]
     name vico.role_name
     description text
@@ -23,17 +34,7 @@ enum vico.role_name {
     owner
     moderator
     contributor
-}
-
-Table vico.subscription{
-    id uint [pk, not null, unique]
-    user_id uint [not null, ref: > vico.user.id]
-    collection_id uint [not null, ref: > vico.collection.id]
-    since datetime 
-
-    Indexes {
-            (user_id, collection_id) [unique] 
-        }
+    subscriber
 }
 
 
@@ -135,7 +136,7 @@ Enum filter_scopes{
 
 Table vico.collection_item{ // gefiltert oder manuell hinzugefuegt.
     id uint [pk, not null, unique]
-    curator_id uint [ref: > vico.curator.id]
+    membership_id uint [ref: > vico.membership.id]
     filter_id uint [ref: > vico.collection_filter.id]
     collection_id uint [not null, ref: > vico.collection.id]
     added datetime
@@ -182,4 +183,18 @@ Enum report_status{
     reviewed
     dismissed
     action_taken
+}
+
+Table vico.feedback{
+    id uint [pk, unique, not null]
+    most_wanted_id unint [ref: > vico.most_wanted.id]
+    message varchar(511)
+    reported datetime [not null]
+    user_id uint [ref: > vico.user.id]
+}
+
+Table vico.most_wanted{
+    id uint [pk, unique, not null]
+    feature_name varchar(63)
+    description text
 }
