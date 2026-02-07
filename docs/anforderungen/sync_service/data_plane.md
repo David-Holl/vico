@@ -4,13 +4,12 @@ Das Data Plane ist für die verarbeitende Datenpipeline verantwortlich.
 Es nimmt vom Control Plane geroutete Connector-Responses entgegen und führt diese in validierte, normalisierte und persistierte Daten über.
 
 Dabei:
+
 - normalisiert es plattformspezifische API-Responses in ein internes Datenformat
 - validiert Daten vor der Persistenz
 - transformiert JSON-Payloads in persistierbare Modelle
 - führt Persistenzoperationen aus
 - meldet Verarbeitungsstatus und Fehler an das Control Plane zurück
-
-
 
 ## Funktionale Anforderungen
 
@@ -26,9 +25,6 @@ Das Data Plane stellt Funktionen bereit, die:
 - Validierung durchführen
   - syntaktische Validierung (zb. Pflichtfelder)
   - semantische Validierung (Domäneninvarianten)
-  - Ergebnis so klassifizieren, dass das Control Plane entscheiden kann:
-    - retryable
-    - non-retryable (dauerhaft ungültige Daten)
 
 - Transformation und Persistenz ausführen
   - Normalform -> persistierbare Modelle (ORM)
@@ -43,13 +39,11 @@ Das Data Plane stellt Funktionen bereit, die:
   - Status pro Verarbeitungseinheit (success/failed)
   - strukturierte Fehler (Kategorie, retryable, technische Details, betroffene Entitäten/IDs)
 
-
 ## Das Data Plane stellt keine Implementierungen bereit für:
 
 - Policy-Management, Scheduling oder Job-Planung
 - API-Aufrufe, Pagination oder Quota-/Kosten-Tracking
 - fachliche Produktfeatures wie Suche oder Benachrichtigungen
-
 
 ## Schnittstellen
 
@@ -61,7 +55,6 @@ Das Data Plane stellt Funktionen bereit, die:
   - Verarbeitungsresultat an das Control Plane (status + Fehlerklassifikation)
   - Persistenzoperationen in den Storage-Layer
   - Cleanup-Resultate an das Control Plane
-
 
 ## Fehlerverhalten
 
