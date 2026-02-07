@@ -22,7 +22,6 @@ Der Connector stellt keine Implementierungen bereit für:
 Der Connector ist bewusst als schlanke, robuste API-Abstraktionsschicht konzipiert.  
 Bei einer separaten Bereitstellung der Implementierung sowie bei horizontaler Skalierung ist er lose gekoppelt ausgelegt und offen für unabhängige Weiterentwicklung.
 
-
 ## Funktionale Anforderungen
 
 Zur zukünftigen Erweiterbarkeit (z. B. Vimeo) muss der Connector ein gemeinsames Interface implementieren, das plattformübergreifend konsistent ist.
@@ -41,17 +40,45 @@ Zur zukünftigen Erweiterbarkeit (z. B. Vimeo) muss der Connector ein gemeinsame
 
 ---
 
+### Endpunkt: Abgleich neuer Channel-Videos (Delta Abgleich)
+
+Abruf neuer Videos eines Channels seit einem definierten Referenzpunkt über
+[`playlistItems.list`](https://developers.google.com/youtube/v3/docs/playlistItems/list)
+
+Diese Methode dient der effizienten Synchronisation, um nur jene Videos abzurufen, die nach dem zuletzt bekannten Video (Latest Known Video) veröffentlicht wurden.
+
+**Parameter:**
+
+- `channelID`: Die ID des Kanals.
+- `latestKnownVideoId`: (String) Die ID des aktuellsten Videos, das bereits in der Datenbank von Vico vorhanden ist.
+
+**Standard Parameter:**
+
+- `part=contentDetails, snippet, status`
+- `maxResults=50`
+
+**Logik und Pagination:**
+
+- Der Connector iteriert die Upload-Playlist chronologisch absteigend (Standard-Sortierung der API).
+- Falls weitere Seiten vorhanden sind, muss der Connector:
+  - mit `pageToken` weitere Requests ausführen.
+  - den Abruf stoppen, sobald die `latestKnownVideoId` in den Ergebnissen identifiziert wurde.
+- Rückgabe erfolgt als aggregierte JSON-Liste aller Videos, die zeitlich *nach* der `latestKnownVideoId` liegen.
+- Falls die `latestKnownVideoId` nicht gefunden wird (z. B. bei sehr vielen neuen Uploads oder Löschungen), werden alle Ergebnisse bis zum Ende der Playlist oder einem definierten Sicherheitslimit abgerufen.
+
+---
+
 ### Endpunkt: Video-Kategorien
 
 Abruf der verfügbaren Video-Kategorien über den Endpoint  
 [`videoCategories.list`](https://developers.google.com/youtube/v3/docs/videoCategories/list)
 
 **Standard Parameter:**
+
 - `part=snippet`
 - `regionCode=US` (nicht konfigurierbar)
 
 Die feste Region `US` dient der Konsistenz innerhalb der eigenen Datenbank und verhindert regionalspezifische Abweichungen.
-
 
 ### Endpunkt: Video-Informationen
 
@@ -59,17 +86,21 @@ Abruf detaillierter Metadaten zu einem oder mehreren Videos über
 [`videos.list`](https://developers.google.com/youtube/v3/docs/videos/list)
 
 **Identifikation:**
+
 - `videoId` Attribut
 - Comma seperated list von `videoId`
 
 **Standard Parameter:**
+
 - `part=snippet, contentDetails, statistics, status`
 
 **Optional (Comma seperated list von `videoId`)**
+
 - `maxResults=50`
 - `pageToken`
 
 **Pagination:**
+
 - Falls weitere Seiten vorhanden sind, muss der Connector:
   - mit `pageToken` weitere Requests ausführen
   - alle Seiten als als eigenes JSON-Objekt (Liste) zurückgeben
@@ -82,10 +113,12 @@ Abruf von Channel-Metadaten über
 [`channels.list`](https://developers.google.com/youtube/v3/docs/channels/list)
 
 **Identifikation:**
+
 - per `channelId`
 - per YouTube-Username (zb. `@ThePrimeTimeagen` und *nicht* der Kanalname `The PrimeTime`)
 
 **Standard Parameter:**
+
 - `part=snippet, contentDetails, topicDetails`
 
 ---
@@ -96,16 +129,17 @@ Abruf aller hochgeladenen Videos eines Channels über
 [`playlistItems.list`](https://developers.google.com/youtube/v3/docs/playlistItems/list)
 
 **Standard Parameter:**
+
 - `part=contentDetails, snippet, id, status`
 - `maxResults=50` (API-Limit)
 
 **Pagination:**
+
 - Falls weitere Seiten vorhanden sind, muss der Connector:
   - mit `pageToken` weitere Requests ausführen
   - alle Seiten als als eigenes JSON-Objekt (Liste) zurückgeben
 
 ---
-
 
 ### Implementierung und Umsetzung
 
@@ -114,13 +148,14 @@ Er kapselt die YouTube Data API vollständig und führt Requests ausschließlich
 
 Alle API-Call-Methoden des Connectors sind asynchron implementiert, da es sich um I/O-gebundene Operationen handelt.
 
-**Konfiguration und Secrets**
+#### Konfiguration und Secrets
+
 - API-Credentials, Timeouts, Retry-Policy und weitere Connector-Settings werden zentral verwaltet und zur Laufzeit geladen.
 - Die Ablage erfolgt in einem abgesicherten Config-Store.
 - Secrets werden **nicht im Code oder in Konfigurationsdateien im Repo** gespeichert.
 
+#### Quota- und Kostenverantwortung
 
-**Quota- und Kostenverantwortung**
 - Der Connector ist die einzige Komponente, die API-Credentials kennt und damit Quota-/Kostenaspekte bei API-Aufrufen berücksichtigen kann.
 - Der Connector stellt zusätzlich eine Methode bereit, um den aktuellen Quota-Status (verbleibendes Kontingent und ggf. Reset-/Zeitraum-Informationen) für das Projekt bereitzustellen und an aufrufende Komponenten weiterzugeben.
 - Der Connector führt zur Laufzeit ein Kostenprotokoll über alle ausgeführten Requests (Endpoint, relevante Parameter, Kontigentkosten, Timestamp, Ergebnisstatus) und kann diese Daten in strukturierter Form an externe Komponenten zur Metrik- und Analyse weitergeben.
@@ -133,6 +168,7 @@ Google stellt für die YouTube Data API keine dedizierte Sandbox- oder Test-API 
 Die Standard-Quota beträgt auch im Test-Projekt 10.000 Units pro 24 Stunden und ist projektgebunden.
 
 Für die folgenden GET-Methoden fällt jeweils 1 Unit pro Request an:
+
 - `playlistItems.list`
 - `channels.list`
 - `videos.list`
