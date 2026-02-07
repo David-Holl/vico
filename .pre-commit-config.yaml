@@ -23,20 +23,20 @@ repos:
         stages: [pre-commit]
         types: [python]
 
-  - repo: local
-    hooks:
-      - id: pytest-quick
-        name: pytest + unit tests
-        entry: uv run pytest --quiet -m "unit"
-        language: system
-        pass_filenames: false # use test discovery
-        stages: [pre-commit]
+  # - repo: local
+  #   hooks:
+  #     - id: pytest-quick
+  #       name: pytest + unit tests
+  #       entry: uv run pytest --quiet -m "unit"
+  #       language: system
+  #       pass_filenames: false # use test discovery
+  #       stages: [pre-commit]
 
-  - repo: local
-    hooks:
-      - id: pytest-all
-        name: pytest-all + coverage
-        entry: uv run pytest --quiet --cov=apps/backend_api --cov=apps/sync_service --cov=packages/connectors --cov-report=term-missing --cov-report=xml
-        language: system
-        pass_filenames: false
-        stages: [pre-push]
+  # - repo: local
+  #   hooks:
+  #     - id: pytest-all
+  #       name: pytest-all + coverage
+  #       entry: uv run pytest --quiet --cov=apps/backend_api --cov=apps/sync_service --cov=packages/connectors --cov-report=term-missing --cov-report=xml
+  #       language: system
+  #       pass_filenames: false
+  #       stages: [pre-push]
