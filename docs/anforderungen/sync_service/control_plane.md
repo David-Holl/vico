@@ -4,13 +4,12 @@ Das Control Plane ist für die steuernde Orchestrierung der Aktualisierung von V
 Es liest und überwacht Aktualisierungs-Policies (Refresh-Regeln) und löst auf Basis dieser Policies gezielte Sync-/Refresh-Läufe aus.
 
 Dabei:
+
 - ruft es den passenden Source Connector (z. B. [[yt_connector]]) auf
 - übergibt die Ergebnisse an das Data Plane zur weiteren Verarbeitung
 - stellt sicher, dass Refresh-Läufe planbar, beobachtbar und quota-bewusst stattfinden.
 
-
 ## Funktionale Anforderungen
-
 
 Das Control Plane stellt Funktionen bereit, die:
 
@@ -46,6 +45,7 @@ Das Control Plane stellt keine Implementierungen bereit für:
 - Persistenz von Metadaten
 
 ## Schnittstellen 
+
 - Policy-/Scheduler-Konfiguration aus Config-Store/DB
 - Trigger:
   - zeitbasiert (Scheduler)

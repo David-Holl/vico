@@ -28,7 +28,7 @@ Anforderungen:
 Aufgabe: Business-Logik, Authentifizierung, Suchfunktionen
 Anforderungen:
 
-## Web App 
+## Web App
 
 Aufgabe: Backend API anfragen, Webseiten ausliefern, darstellung der Webseite
 Anforderungen:
