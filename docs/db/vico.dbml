@@ -93,7 +93,6 @@ Table vico.video{
     metadata_date datetime [not null]
     channel_id uint [not null, ref: > vico.channel.id]
     platform_video_id varchar(255) [not null]
-    applied_by_filter_id uint [ref: > vico.collection_filter.id]
     title varchar(127)
     description text
     type_id uint [not null, ref: > vico.video_type.id]
