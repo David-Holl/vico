@@ -7,6 +7,7 @@ Table control.api_constraints {
     reported datetime
     rate_limit_per_minute int
     metadata_stale_days int
+    quota_sync_interval int [default: 100]
 }
 
 Table control.refresh_job {
