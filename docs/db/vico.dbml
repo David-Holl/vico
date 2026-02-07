@@ -1,19 +1,19 @@
 Table vico.user{
     id uint [pk, not null, unique]
-    name varchar(63) [not null]
-    email varchar(255) [not null, unique]
+    name varchar(63) [not null] // DSGVO
+    email varchar(255) [not null, unique] // DSGVO
     password_hash varchar(255) [not null]
-    created datetime
+    created datetime // DSGVO
 }
 
 Table vico.membership{
     id uint [pk, not null, unique]
-    user_id uint [not null, ref: > vico.user.id]
+    user_id uint [not null, ref: > vico.user.id] // DSGVO
     member_role_id uint [not null, ref: > vico.member_role.id]
     collection_id uint [not null, ref: > vico.collection.id]
-    since datetime
+    since datetime // DSGVO
     notify bool [default:1]
-    last_viewed datetime
+    last_viewed datetime // DSGVO
     priority uint [not null, default: 0]
     sort_index uint [not null, default: 0]
 
@@ -136,7 +136,7 @@ Enum filter_scopes{
 
 Table vico.collection_item{ // gefiltert oder manuell hinzugefuegt.
     id uint [pk, not null, unique]
-    membership_id uint [ref: > vico.membership.id]
+    membership_id uint [ref: > vico.membership.id] // DSGVO
     filter_id uint [ref: > vico.collection_filter.id]
     collection_id uint [not null, ref: > vico.collection.id]
     added datetime
@@ -153,10 +153,10 @@ Table vico.collection_item{ // gefiltert oder manuell hinzugefuegt.
 
 Table vico.collection_report{
     id uint [pk, not null, unique]
-    reported_by uint [not null, ref: > vico.user.id]
-    reported_at datetime
+    reported_by uint [not null, ref: > vico.user.id] // DSGVO
+    reported_at datetime // DSGVO
     collection_id uint [not null, ref: > vico.collection.id]
-    message varchar(511)
+    message varchar(511) // DSGVO
     reason_id uint [not null, ref: > vico.report_reason.id]
     status report_status [default: "pending"]
     updated datetime
@@ -188,13 +188,26 @@ Enum report_status{
 Table vico.feedback{
     id uint [pk, unique, not null]
     most_wanted_id unint [ref: > vico.most_wanted.id]
-    message varchar(511)
+    message varchar(511) // DSGVO
     reported datetime [not null]
-    user_id uint [ref: > vico.user.id]
+    user_id uint [ref: > vico.user.id] // DSGVO
 }
 
 Table vico.most_wanted{
     id uint [pk, unique, not null]
     feature_name varchar(63)
     description text
+}
+
+Table vico.session {
+    id uint [pk, not null, unique]
+    user_id uint [not null, ref: > vico.user.id] // DSGVO
+    token_hash varchar(255) [not null, unique]
+    ip_address varchar(45) // DSGVO
+    user_agent text // DSGVO
+    device_name varchar(63) // DSGVO
+    created datetime [not null]
+    expires datetime [not null]
+    last_active datetime // DSGVO
+    revoked bool [default: 0]
 }
