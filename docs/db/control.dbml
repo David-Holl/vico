@@ -1,0 +1,52 @@
+Table control.api_constraints {
+    id uint [pk, not null, unique]
+    platform_name platform_name [not null]
+    quota_limit uint
+    quota_reset_cron varchar(63) [not null]
+    quota_left int
+    reported datetime
+    rate_limit_per_minute int
+    metadata_stale_days int
+}
+
+Table control.refresh_job {
+    id uint64 [pk, not null, unique]
+    platform_name platform_name [not null]
+    target_type job_target_type [not null]
+    target_id uint
+    created_at datetime [not null]
+    scheduled_for datetime
+    started_at datetime
+    priority uint [not null]
+    policy_id uint [not null, ref: > control.policy.id]
+    status job_status [default: "pending"]
+    backfill bool [default: 0] // jobs die kurz vor ende des quota resets ausgefuehrt werden um das kontigent auszuschoepfen
+    retry_count uint [default: 0]
+    last_error varchar(255)
+}
+
+Enum control.job_target_type {
+    channel_metadata
+    channel_full_sync
+    channel_delta_sync
+    platform_categories
+    video_details
+}
+
+Enum control.job_status {
+    pending
+    running
+    completed
+    retrying
+    failed
+}
+
+Table control.policy{
+    id uint [pk, not null, unique]
+    platform_name platform_name [not null]
+    retries_max int [default: 5]
+    retry_delay_sec uint [default: 10]
+    backoff_factor ufloat [default: 2.0]
+    refresh_cron varchar(63)
+    default_job_priority uint [default: 50] // 100 max prio, 0 no prio
+}

@@ -11,6 +11,7 @@ Anforderungen:
 - [[yt_connector]]
 - [[sync_service/control_plane]]
 - [[data_plane]]
+- caching
 
 ## Data Storage
 
