@@ -143,8 +143,9 @@ Table vico.collection_item{ // gefiltert oder manuell hinzugefuegt.
     priority uint [not null, default: 0]
     sort_index uint [not null, default: 0]
 
-    indexes { 
+    Indexes { 
         (collection_id, priority, sort_index)
+        (collection_id, video_id) [unique]
     }
 
 }
