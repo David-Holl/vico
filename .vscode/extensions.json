@@ -1,13 +1,18 @@
 {
   "recommendations": [
-    "foam.foam-vscode",            // Notizen & Wiki-Links
-    "pomdtr.excalidraw-editor",    // Skizzen & Zeichnungen
-    "yzhang.markdown-all-in-one",  // Besseres Markdown-Handling,
-    "tamasfe.even-better-toml",    // Formatierung und Syntaxhiglighting (toml)
+    "foam.foam-vscode", // Notizen & Wiki-Links
+    "pomdtr.excalidraw-editor", // Skizzen & Zeichnungen
+    "yzhang.markdown-all-in-one", // Besseres Markdown-Handling,
+    "tamasfe.even-better-toml", // Formatierung und Syntaxhiglighting (toml)
     "ms-python.python",
     "ms-python.vscode-pylance",
     "charliermarsh.ruff",
     "ms-python.mypy-type-checker",
-    "dbdiagram.dbdiagram-vscode"
+    "dbdiagram.dbdiagram-vscode",
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-typescript-next",
+    "yoavbls.pretty-ts-errors"
   ]
 }
