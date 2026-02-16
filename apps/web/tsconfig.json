@@ -1,18 +1,36 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
+    /* --- Grundlagen & Next.js Standard --- */
+    "target": "ESNext",
     "module": "esnext",
     "moduleResolution": "bundler",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "jsx": "react-jsx",
+    "checkJs": true,
+    "allowJs": true,
+    "noEmit": true,
+    "incremental": true,
+    "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
-    "incremental": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true, // Wichtig: Prüft keine Fehler in fremden node_modules
+
+    /* --- Maximale Striktheit --- */
+    "strict": true, // Aktiviert: noImplicitAny, strictNullChecks, etc.
+    "noUncheckedIndexedAccess": true,      // Zwingt zur Prüfung bei Array-Zugriffen (z.B. myArr[0])
+    "exactOptionalPropertyTypes": true,    // Unterschied zwischen "fehlt" und "undefined"
+    "noPropertyAccessFromIndexSignature": true, // Sicherer Umgang mit dynamischen Objekten
+    "noImplicitReturns": true,             // Jede Funktion muss in jedem Pfad returnen
+    "noFallthroughCasesInSwitch": true,    // Keine vergessenen 'break' in Switch-Blöcken
+    "noUnusedLocals": true,                // Keine Leichen (ungenutzte Variablen)
+    "noUnusedParameters": true,            // Keine ungenutzten Funktionsparameter
+    "noImplicitOverride": true,            // Explizite Kennzeichnung bei Klassen-Vererbung
+
+    /* --- Modernisierung & Performance --- */
+    "verbatimModuleSyntax": true,          // Zwingt zu 'import type' (besser für Compiler)
+    "moduleDetection": "force",            // Jede Datei wird als Modul behandelt
+
     "plugins": [
       {
         "name": "next"
