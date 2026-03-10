@@ -47,7 +47,7 @@ repos:
       - id: frontend-formatter
         name: Prettier
         language: system
-        entry: npx --prefix apps/web prettier --write --ignore-unknown
+        entry: bash -c 'cd apps/web && npx prettier --write --ignore-unknown "${@#apps/web/}"' --
         files: ^apps/web/
         pass_filenames: true
         stages: [pre-commit]

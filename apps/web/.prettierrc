@@ -4,5 +4,5 @@
   "singleQuote": false,
   "printWidth": 88,
   "tabWidth": 2,
-  "plugins": ["./node_modules/prettier-plugin-tailwindcss/dist/index.mjs"]
+  "plugins": ["prettier-plugin-tailwindcss"]
 }
