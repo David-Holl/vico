@@ -1,0 +1,13 @@
+@import "./colors.css";
+
+@theme {
+  /* Dimensions */
+  --navbar-height: 56px;
+  /* Navbar */
+  --navbar-bg: var(--color-surface-primary);
+  --navbar-border-color: var(--color-border);
+  /* Logo */
+  --logo-color: var(--color-accent);
+  /* Search */
+  --navbar-search-max-width: 56rem;
+}

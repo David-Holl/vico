@@ -1,0 +1,6 @@
+@theme {
+  --color-surface-primary: rgb(255, 255, 255);
+  --color-surface-secondary: rgb(229, 251, 252);
+  --color-border: rgb(208, 208, 208);
+  --color-accent: rgb(37, 99, 235);
+}
