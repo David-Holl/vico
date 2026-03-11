@@ -1,6 +1,8 @@
 @theme {
-  --color-surface-primary: rgb(255, 255, 255);
-  --color-surface-secondary: rgb(229, 251, 252);
-  --color-border: rgb(208, 208, 208);
-  --color-accent: rgb(37, 99, 235);
+  --color-surface-primary: #ffffff;
+  --color-surface-secondary: #ededed;
+  --color-border: #d0d0d0;
+  --color-border-subtle: #10182815;
+  --color-accent: #2563eb;
+  --color-focus-1: #c8d4ef91;
 }

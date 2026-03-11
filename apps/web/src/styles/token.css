@@ -6,8 +6,17 @@
   /* Navbar */
   --navbar-bg: var(--color-surface-primary);
   --navbar-border-color: var(--color-border);
+  --navbar-z: 40;
+  /* Sidebar */
+  --sidebar-bg: var(--color-surface-primary);
+  --sidebar-border-color: var(--color-border);
+  --sidebar-focus-color: var(--color-focus-1);
+  --sidebar-spacer-color: var(--color-border-subtle);
   /* Logo */
   --logo-color: var(--color-accent);
   /* Search */
   --navbar-search-max-width: 56rem;
+  --navbar-search-bg: var(--color-surface-secondary);
+  /* Spacing */
+  --spacing-icon-text: 16px;
 }
