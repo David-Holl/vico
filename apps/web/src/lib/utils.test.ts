@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import { cn, truncateText } from "@/lib/utils";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { cn, truncateText, getRelativeTime } from "@/lib/utils";
 
 describe("cn utility", () => {
   it("should merge class names correctly", () => {
@@ -39,5 +39,82 @@ describe("truncateText utility", () => {
 
   it("should hard truncate if no spaces are found before limit", () => {
     expect(truncateText("Antidisestablishmentarianism", 10)).toBe("Antidi ...");
+  });
+});
+
+describe("getRelativeTime utility", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-03-30T20:00:00Z"));
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  it("should return 'just now' for timestamps less than 60 seconds ago", () => {
+    expect(getRelativeTime(new Date("2026-03-30T19:59:01Z"))).toBe("just now");
+  });
+  it("should return 'just now' for current time (0 seconds difference)", () => {
+    expect(getRelativeTime(new Date("2026-03-30T20:00:00Z"))).toBe("just now");
+  });
+  it("should throw an error if the date is in the future", () => {
+    expect(() => getRelativeTime(new Date("2026-03-30T20:00:01Z"))).toThrow(
+      "Date is in the future",
+    );
+  });
+  it("should return '1 minute ago' when exactly 60 sec have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-30T19:59:00Z"))).toBe("1 minute ago");
+  });
+  it("should round down '1 minute ago' when 119 sec have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-30T19:58:01Z"))).toBe("1 minute ago");
+  });
+  it("should return '2 minutes ago' when 120 sec have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-30T19:58:00Z"))).toBe("2 minutes ago");
+  });
+  it("should return '59 minutes ago' when 1 hour minus 1 sec have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-30T19:00:01Z"))).toBe("59 minutes ago");
+  });
+  it("should return '1 hour ago' when 1 hour have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-30T19:00:00Z"))).toBe("1 hour ago");
+  });
+  it("should return '1 hour ago' when 1 hour, 59min and 59sec have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-30T18:00:01Z"))).toBe("1 hour ago");
+  });
+  it("should return '2 hours ago' when 2 hours have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-30T18:00:00Z"))).toBe("2 hours ago");
+  });
+  it("should return '23 hours ago' when 24h minus 1 sec have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-29T20:00:01Z"))).toBe("23 hours ago");
+  });
+  it("should return 'yesterday' when 24h have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-29T20:00:00Z"))).toBe("yesterday");
+  });
+  it("should return 'yesterday' when 2 days minus 1sec have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-28T20:00:01Z"))).toBe("yesterday");
+  });
+  it("should return '2 days ago' when 2 days have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-28T20:00:00Z"))).toBe("2 days ago");
+  });
+  it("should return '6 days ago' when 1 week minus 1 sec have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-23T20:00:01Z"))).toBe("6 days ago");
+  });
+  it("should return 'last week' when 1 week have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-23T20:00:00Z"))).toBe("last week");
+  });
+  it("should return 'last week' when 2 weeks minus 1 sec have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-16T20:00:01Z"))).toBe("last week");
+  });
+  it("should return '2 weeks ago' when 2 weeks have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-16T20:00:00Z"))).toBe("2 weeks ago");
+  });
+  it("should return '3 weeks ago' when 1 month minus 1sec have passed", () => {
+    expect(getRelativeTime(new Date("2026-03-02T20:00:01Z"))).toBe("3 weeks ago");
+  });
+  it("should return 'last month' when 1 month have passed", () => {
+    expect(getRelativeTime(new Date("2026-02-28T20:00:00Z"))).toBe("last month");
+  });
+  it("should return 'last month' when 2 months minus 1 sec have passed", () => {
+    expect(getRelativeTime(new Date("2026-01-30T20:00:01Z"))).toBe("last month");
   });
 });
