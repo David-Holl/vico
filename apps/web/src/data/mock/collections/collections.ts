@@ -3,22 +3,30 @@ import type { Channel, Collection, RecentVideo, SubCategory } from "@/types/coll
 const mockDate: Date = new Date("2026-03-12T14:30:00Z");
 
 export const channels: Channel[] = [
-  { id: 1, name: "The Gamer", thumbnailUrl: "./assets/channelThumbnails/play.png" },
+  {
+    id: 1,
+    name: "The Gamer",
+    thumbnailUrl: "/mock/collections/assets/channelThumbnails/play.jpg",
+  },
   {
     id: 2,
     name: "How the fuck..?",
-    thumbnailUrl: "./assets/channelThumbnails/youtube.png",
+    thumbnailUrl: "/mock/collections/assets/channelThumbnails/youtube.jpg",
   },
-  { id: 3, name: "Behaind", thumbnailUrl: "./assets/channelThumbnails/circle.png" },
+  {
+    id: 3,
+    name: "Behaind",
+    thumbnailUrl: "/mock/collections/assets/channelThumbnails/circle.jpg",
+  },
   {
     id: 4,
     name: "Business Insider",
-    thumbnailUrl: "./assets/channelThumbnails/logo.png",
+    thumbnailUrl: "/mock/collections/assets/channelThumbnails/logo.jpg",
   },
   {
     id: 5,
     name: "Mindset Matters",
-    thumbnailUrl: "./assets/channelThumbnails/wave.png",
+    thumbnailUrl: "/mock/collections/assets/channelThumbnails/wave.jpg",
   },
 ];
 
@@ -123,7 +131,7 @@ export const collections: Collection[] = [
     curator: { id: 1, name: "The Gamer" },
     recentVideos: [recentVideos[0]!, recentVideos[1]!, recentVideos[2]!],
     name: "Epische Schlacht",
-    thumbnailPath: "./assets/collectionThumbnails/schlacht.png",
+    thumbnailPath: "/mock/collections/assets/collectionThumbnails/schlacht.jpg",
     mainCategory: { id: 1, name: "Gaming" },
     subCategories: [subCategories[0]!, subCategories[6]!],
     description: "Minecraft Challenges, Mods und Lets Plays für lange Nächte.",
@@ -136,7 +144,7 @@ export const collections: Collection[] = [
     curator: { id: 2, name: "How the fuck..?" },
     recentVideos: [recentVideos[3]!, recentVideos[4]!],
     name: "Warum? Wie es funktioniert",
-    thumbnailPath: "./assets/collectionThumbnails/warum.png",
+    thumbnailPath: "/mock/collections/assets/collectionThumbnails/warum.jpg",
     mainCategory: { id: 15, name: "Learning & Education" },
     subCategories: [subCategories[9]!, subCategories[12]!, subCategories[7]!],
     description:
@@ -150,7 +158,7 @@ export const collections: Collection[] = [
     curator: { id: 3, name: "Behaind" },
     recentVideos: [recentVideos[5]!, recentVideos[6]!],
     name: "Besser als das Original?",
-    thumbnailPath: "./assets/collectionThumbnails/kritik.png",
+    thumbnailPath: "/mock/collections/assets/collectionThumbnails/kritik.jpg",
     mainCategory: { id: 11, name: "Cinema & Media" },
     subCategories: [subCategories[5]!, subCategories[4]!, subCategories[10]!],
     description:
@@ -164,7 +172,7 @@ export const collections: Collection[] = [
     curator: { id: 4, name: "Business Insider" },
     recentVideos: [recentVideos[7]!, recentVideos[8]!],
     name: "Vom Startup zum Unicorn",
-    thumbnailPath: "./assets/collectionThumbnails/unicorn.png",
+    thumbnailPath: "/mock/collections/assets/collectionThumbnails/unicorn.jpg",
     mainCategory: { id: 12, name: "Business & Ventures" },
     subCategories: [subCategories[1]!, subCategories[3]!, subCategories[2]!],
     description: "Strategien, Insights und Case-Studies aus der Welt der Startups.",
@@ -177,7 +185,7 @@ export const collections: Collection[] = [
     curator: { id: 5, name: "Mindset Matters" },
     recentVideos: [recentVideos[9]!],
     name: "Der Weg zur Meisterschaft",
-    thumbnailPath: "./assets/collectionThumbnails/warum.png",
+    thumbnailPath: "/mock/collections/assets/collectionThumbnails/warum.jpg",
     mainCategory: { id: 10, name: "Mind & Psychology" },
     subCategories: [subCategories[16]!, subCategories[17]!],
     description:
