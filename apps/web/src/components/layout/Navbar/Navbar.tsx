@@ -7,14 +7,14 @@ import NavbarSearch from "./NavbarSearch";
 export default function Navbar(): ReactNode {
   return (
     <nav className="sticky top-0 z-(--navbar-z) flex h-(--navbar-height) w-full items-center border-b border-(--navbar-border-color) bg-(--navbar-bg)">
-      <div className="ml-4 flex flex-1 items-center gap-2">
+      <div className="ml-4 flex items-center gap-2">
         <NavbarHamburger />
         <Logo />
       </div>
-      <div className="flex flex-1 justify-center">
+      <div className="flex flex-1 pl-8">
         <NavbarSearch />
       </div>
-      <div className="mr-4 flex flex-1 items-center justify-end gap-2">
+      <div className="mr-4 flex items-center justify-end gap-2">
         <NavbarActions />
       </div>
     </nav>

@@ -1,9 +1,25 @@
 @import "./colors.css";
 
 @theme {
-  /* Dimensions */
-  --navbar-height: 56px;
+  /* Text Sizes */
+  --text-badge: 12px;
+  --text-card-category: 18px;
+  --text-card-name: 24px;
+  --text-card-desc: 16px;
+
+  /* Text Color */
+  --text-color-primary: var(--color-text-primary);
+  --text-color-secondary: var(--color-text-secondary);
+
+  /* Borders */
+  --border-card: 0px solid var(--color-light);
+
+  /* Background Colors */
+  --main-bg-color: var(--color-surface-secondary);
+  --card-bg-color: var(--color-surface-primary);
+
   /* Navbar */
+  --navbar-height: 56px;
   --navbar-bg: var(--color-surface-primary);
   --navbar-border-color: var(--color-border);
   --navbar-z: 40;
@@ -15,8 +31,19 @@
   /* Logo */
   --logo-color: var(--color-accent);
   /* Search */
-  --navbar-search-max-width: 56rem;
+  --navbar-search-max-width: 60rem;
   --navbar-search-bg: var(--color-surface-secondary);
   /* Spacing */
   --spacing-icon-text: 16px;
+  --spacing-icon-text-small: 8px;
+  /* Badge */
+  --badge-bg-color-info: var(--color-dark);
+  --badge-border-info: 1px solid var(--color-light);
+  --badge-border-radius: 4px;
+  --badge-text-color-info: var(--color-light);
+  --badge-icon-color-info: var(--color-light);
+  /* Collection Card*/
+  --card-border-radius: 8px;
+  --card-min-width: 300px;
+  --card-bg-color: var(--color-surface-primary);
 }

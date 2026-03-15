@@ -13,5 +13,9 @@ export default function CollectionCardBody({
     description,
     COLLECTION_CARD_MAX_DESCRIPTION_LENGTH,
   );
-  return <span>{truncatedDescription}</span>;
+  return (
+    <span className={"text-card-desc [color:var(--text-color-secondary)]"}>
+      {truncatedDescription}
+    </span>
+  );
 }

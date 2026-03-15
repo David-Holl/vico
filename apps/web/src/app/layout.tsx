@@ -17,12 +17,12 @@ export default function RootLayout({
 }>): ReactNode {
   return (
     <html lang="en">
-      <body className="flex h-screen flex-col">
+      <body className="h-screen flex-1 flex-col">
         <SidebarProvider>
           <Navbar />
-          <div className="flex flex-1">
+          <div className="flex">
             <Sidebar />
-            {children}
+            <div className="flex-1 bg-(--main-bg-color) p-4">{children}</div>
           </div>
         </SidebarProvider>
       </body>

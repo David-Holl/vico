@@ -12,8 +12,10 @@ export default function CollectionCardHeader({
 }: CollectionCardHeaderProps): ReactNode {
   return (
     <div>
-      <h2>{category.name}</h2>
-      <h3>{name}</h3>
+      <h1 className={"text-card-category [color:var(--text-color-secondary)]"}>
+        {category.name}
+      </h1>
+      <h1 className={"text-card-name [color:var(--text-color-primary)]"}>{name}</h1>
     </div>
   );
 }

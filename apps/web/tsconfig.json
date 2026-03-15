@@ -5,7 +5,7 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "checkJs": true,
     "allowJs": true,
     "noEmit": true,
@@ -15,7 +15,6 @@
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true, // Wichtig: Prüft keine Fehler in fremden node_modules
-
     /* --- Maximale Striktheit --- */
     "strict": true, // Aktiviert: noImplicitAny, strictNullChecks, etc.
     "noUncheckedIndexedAccess": true, // Zwingt zur Prüfung bei Array-Zugriffen (z.B. myArr[0])
@@ -26,11 +25,9 @@
     "noUnusedLocals": true, // Keine Leichen (ungenutzte Variablen)
     "noUnusedParameters": true, // Keine ungenutzten Funktionsparameter
     "noImplicitOverride": true, // Explizite Kennzeichnung bei Klassen-Vererbung
-
     /* --- Modernisierung & Performance --- */
     "verbatimModuleSyntax": true, // Zwingt zu 'import type' (besser für Compiler)
     "moduleDetection": "force", // Jede Datei wird als Modul behandelt
-
     "plugins": [
       {
         "name": "next"

@@ -134,7 +134,8 @@ export const collections: Collection[] = [
     thumbnailPath: "/mock/collections/assets/collectionThumbnails/schlacht.jpg",
     mainCategory: { id: 1, name: "Gaming" },
     subCategories: [subCategories[0]!, subCategories[6]!],
-    description: "Minecraft Challenges, Mods und Lets Plays für lange Nächte.",
+    description:
+      "Eine Sammlung der besten React Tutorials und Best Practices für moderne Web-Entwicklung. Hier findest du professionelle Anleitungen zu React Hooks, State Management, Performance-Optimierung und modernen Design Patterns. Perfekt für Entwickler, die ihre React-Skills auf das nächste Level bringen möchten. Mit regelmäßigen Updates zu den neuesten Features und Community-Best-Practices.",
     updatedAt: mockDate,
     subscriberCount: 2000,
     videoCount: 50,
