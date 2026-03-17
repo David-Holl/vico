@@ -15,19 +15,16 @@ export function useNavbarSearch(): {
   const router = useRouter();
   const path = usePathname();
   const [inputValue, setInputValue] = useState(searchParams.get("q") ?? "");
-  const ref = useRef(inputValue);
+  const lastPushedQuery = useRef(inputValue);
 
   useEffect(() => {
-    console.log("useEffect() called");
     const timer = setTimeout(() => {
-      if (inputValue !== ref.current) {
+      if (inputValue !== lastPushedQuery.current) {
+        lastPushedQuery.current = inputValue;
         if (inputValue) {
-          console.log("push with params");
           router.push(`?q=${encodeURIComponent(inputValue)}`);
         } else {
-          ref.current = inputValue;
           router.push(path);
-          console.log("push without params");
         }
       }
     }, SEARCH_DEBOUNCE_MS);
