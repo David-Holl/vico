@@ -8,7 +8,7 @@ interface SidebarContextType {
 
 const SidebarContext = createContext<SidebarContextType>({
   isOpen: false,
-  toggle: () => {},
+  toggle: () => {}, // TODO raise error when no provider is provided
 });
 
 export function SidebarProvider({ children }: { children: ReactNode }) {
