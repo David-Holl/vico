@@ -40,3 +40,24 @@ repos:
         language: system
         pass_filenames: false
         stages: [pre-push]
+
+
+  - repo: local
+    hooks:
+      - id: frontend-formatter
+        name: Prettier
+        language: system
+        entry: bash -c 'cd apps/web && npx prettier --write --ignore-unknown "${@#apps/web/}"' --
+        files: ^apps/web/
+        pass_filenames: true
+        stages: [pre-commit]
+        
+  - repo: local
+    hooks:
+      - id: frontend-lint
+        name: Frontend Lint
+        stages: [pre-commit]
+        language: system
+        entry: bash -c "cd apps/web && npx tsc --noEmit && npm run lint"
+        files: ^apps/web/
+        pass_filenames: false

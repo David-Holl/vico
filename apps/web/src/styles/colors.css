@@ -1,0 +1,12 @@
+@theme {
+  --color-surface-primary: #ffffff;
+  --color-surface-secondary: #f3f3f5;
+  --color-border: #d0d0d0;
+  --color-border-subtle: #10182815;
+  --color-accent: #2563eb;
+  --color-focus-1: #c8d4ef91;
+  --color-text-primary: #000000;
+  --color-text-secondary: #4a5565;
+  --color-dark: #000000;
+  --color-light: #ffffff;
+}
