@@ -6,27 +6,27 @@ export const channels: Channel[] = [
   {
     id: 1,
     name: "The Gamer",
-    thumbnailUrl: "/mock/collections/assets/channelThumbnails/play.jpg",
+    thumbnailUrl: "/mock/collections/assets/channelThumbnails/play.png",
   },
   {
     id: 2,
     name: "How the fuck..?",
-    thumbnailUrl: "/mock/collections/assets/channelThumbnails/youtube.jpg",
+    thumbnailUrl: "/mock/collections/assets/channelThumbnails/youtube.png",
   },
   {
     id: 3,
     name: "Behaind",
-    thumbnailUrl: "/mock/collections/assets/channelThumbnails/circle.jpg",
+    thumbnailUrl: "/mock/collections/assets/channelThumbnails/circle.png",
   },
   {
     id: 4,
     name: "Business Insider",
-    thumbnailUrl: "/mock/collections/assets/channelThumbnails/logo.jpg",
+    thumbnailUrl: "/mock/collections/assets/channelThumbnails/logo.png",
   },
   {
     id: 5,
     name: "Mindset Matters",
-    thumbnailUrl: "/mock/collections/assets/channelThumbnails/wave.jpg",
+    thumbnailUrl: "/mock/collections/assets/channelThumbnails/wave.png",
   },
 ];
 
@@ -129,7 +129,13 @@ export const collections: Collection[] = [
   {
     id: 1,
     curator: { id: 1, name: "The Gamer" },
-    recentVideos: [recentVideos[0]!, recentVideos[1]!, recentVideos[2]!],
+    recentVideos: [
+      recentVideos[0]!,
+      recentVideos[6]!,
+      recentVideos[4]!,
+      recentVideos[1]!,
+      recentVideos[2]!,
+    ],
     name: "Epische Schlacht",
     thumbnailPath: "/mock/collections/assets/collectionThumbnails/schlacht.jpg",
     mainCategory: { id: 1, name: "Gaming" },
@@ -171,7 +177,6 @@ export const collections: Collection[] = [
   {
     id: 4,
     curator: { id: 4, name: "Business Insider" },
-    recentVideos: [recentVideos[7]!, recentVideos[8]!],
     name: "Vom Startup zum Unicorn",
     thumbnailPath: "/mock/collections/assets/collectionThumbnails/unicorn.jpg",
     mainCategory: { id: 12, name: "Business & Ventures" },

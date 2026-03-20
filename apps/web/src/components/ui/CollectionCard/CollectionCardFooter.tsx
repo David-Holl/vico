@@ -1,23 +1,34 @@
 import { getRelativeTime } from "@/lib/utils";
-import type { Collection } from "@/types/collection";
+import { Calendar, UserRoundPen, UsersRound } from "lucide-react";
 import type { ReactNode } from "react";
 
 interface CollectionCardFooterProps {
-  collection: Collection;
+  curatorName: string;
+  subscriberCount: number;
+  updatedAt: Date;
 }
 
 export default function CollectionCardFooter({
-  collection,
+  curatorName,
+  subscriberCount,
+  updatedAt,
 }: CollectionCardFooterProps): ReactNode {
-  const curator = collection.curator.name;
-  const subscriberCount = collection.subscriberCount;
-  const relativeTime = getRelativeTime(collection.updatedAt);
+  const relativeTime = getRelativeTime(updatedAt);
 
   return (
-    <div>
-      <div>{curator}</div>
-      <div>{subscriberCount}</div>
-      <div>{relativeTime}</div>
+    <div className="text-card-footer flex items-center">
+      <div className="flex flex-2 items-center gap-2">
+        <UserRoundPen className={"size-(--card-footer-icon-size)"} />
+        {curatorName}
+      </div>
+      <div className="flex flex-1 items-center gap-2">
+        <UsersRound className={"size-(--card-footer-icon-size)"} />
+        {subscriberCount}
+      </div>
+      <div className="flex flex-1 items-center gap-2">
+        <Calendar className={"size-(--card-footer-icon-size)"} />
+        {relativeTime}
+      </div>
     </div>
   );
 }

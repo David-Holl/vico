@@ -19,7 +19,7 @@ export interface Channel {
 export interface Collection {
   id: number;
   curator: Curator;
-  recentVideos: RecentVideo[];
+  recentVideos?: RecentVideo[];
   name: string;
   thumbnailPath: string;
   mainCategory: MainCategory;

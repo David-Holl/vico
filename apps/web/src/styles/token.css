@@ -6,17 +6,24 @@
   --text-card-category: 18px;
   --text-card-name: 24px;
   --text-card-desc: 16px;
+  --text-card-footer: 12px;
+  --text-extension: 8px;
+  --card-footer-icon-size: calc(var(--text-card-footer) + 4px);
 
   /* Text Color */
   --text-color-primary: var(--color-text-primary);
   --text-color-secondary: var(--color-text-secondary);
 
   /* Borders */
-  --border-card: 0px solid var(--color-light);
+  --border-card: 1px solid var(--color-border-subtle);
+  --border-extension: 1px solid var(--color-border-subtle);
 
   /* Background Colors */
   --main-bg-color: var(--color-surface-secondary);
   --card-bg-color: var(--color-surface-primary);
+
+  /* Image Sizes */
+  --extension-channel-icon: 30px;
 
   /* Navbar */
   --navbar-height: 56px;

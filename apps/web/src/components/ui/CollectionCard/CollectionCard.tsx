@@ -4,6 +4,8 @@ import CollectionCardThumbnail from "./CollectionCardThumbnail";
 import { cn } from "@/lib/utils";
 import CollectionCardHeader from "./CollectionCardHeader";
 import CollectionCardBody from "./CollectionCardBody";
+import CollectionCardFooter from "./CollectionCardFooter";
+import CollectionCardExtension from "./CollectionCardExtension";
 
 interface CollectionCardProps {
   collection: Collection;
@@ -11,32 +13,48 @@ interface CollectionCardProps {
 
 export default function CollectionCard({ collection }: CollectionCardProps): ReactNode {
   return (
-    <div
-      className={cn(
-        "rounded-(--card-border-radius)",
-        "[border:var(--border-card)]",
-        "overflow-hidden",
-        "bg-(--card-bg-color)",
-      )}
-    >
-      <CollectionCardThumbnail
-        thumbnailUrl={collection.thumbnailPath}
-        videoCount={collection.videoCount}
-      />
-      <div className="mx-8 mb-8">
-        <div className="mt-12">
-          <CollectionCardHeader
-            category={collection.mainCategory}
-            name={collection.name}
+    <div>
+      <div className={cn("flex", "flex-col", "h-140", "overflow-hidden")}>
+        <div className="overflow-hidden rounded-t-(--card-border-radius)">
+          <CollectionCardThumbnail
+            thumbnailUrl={collection.thumbnailPath}
+            videoCount={collection.videoCount}
           />
         </div>
-        <div className="mt-4">
-          <CollectionCardBody description={collection.description} />
+        <div
+          className={cn(
+            "flex",
+            "flex-1",
+            "flex-col",
+            "bg-(--card-bg-color)",
+            "[border-bottom:var(--border-card)]",
+            "[border-left:var(--border-card)]",
+            "[border-right:var(--border-card)]",
+          )}
+        >
+          <div className="mx-6 flex-1">
+            <div className="mt-12">
+              <CollectionCardHeader
+                category={collection.mainCategory}
+                name={collection.name}
+              />
+            </div>
+            <div className="mt-4">
+              <CollectionCardBody description={collection.description} />
+            </div>
+          </div>
+          <div className="mx-6 mb-4">
+            <CollectionCardFooter
+              curatorName={collection.curator.name}
+              subscriberCount={collection.subscriberCount}
+              updatedAt={collection.updatedAt}
+            />
+          </div>
         </div>
       </div>
+      <div>
+        <CollectionCardExtension recentVideos={collection.recentVideos ?? []} />
+      </div>
     </div>
-
-    // description(collection.description)
-    // footer(collection.curator, collection.subscriberCount, collection.updatedAt)
   );
 }
