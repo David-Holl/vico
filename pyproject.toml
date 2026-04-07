@@ -12,6 +12,8 @@ dev = [
     "pre-commit>=4.5.1",
     "pytest>=9.0.2",
     "pytest-cov>=7.0.0",
+    "python-dotenv>=1.2.2",
+    "requests>=2.33.1",
     "ruff>=0.14.14",
 ]
 
@@ -45,6 +47,10 @@ pretty = true                               # human readable shell output
 show_error_codes = true
 files = ["."]
 exclude = ['^\.venv/', '^build/', '^dist/', '^apps/.*/tests/']
+
+[tool.pyright]
+venvPath="."
+venv=".venv"
 
 [tool.pytest.ini_options]
 minversion = "9.0"
