@@ -8,13 +8,14 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-    "mypy>=1.19.1",
-    "pre-commit>=4.5.1",
-    "pytest>=9.0.2",
-    "pytest-cov>=7.0.0",
-    "python-dotenv>=1.2.2",
-    "requests>=2.33.1",
-    "ruff>=0.14.14",
+  "mypy>=1.19.1",
+  "pre-commit>=4.5.1",
+  "pytest>=9.0.2",
+  "pytest-cov>=7.0.0",
+  "python-dotenv>=1.2.2",
+  "requests>=2.33.1",
+  "ruff>=0.14.14",
+  "types-requests>=2.33.0.20260402",
 ]
 
 [tool.ruff]
@@ -25,13 +26,13 @@ exclude = [".venv", ".git"]
 
 [tool.ruff.lint]
 select = [
-    "E",   # pycodestyle: classic PEP8 Errors
-    "W",   # pycodestyle warnings: trailing whitespace, whitespace-only blank lines, ...
-    "F",   # Pyflakes: unused imports and vars; undefined or double definitions
-    "UP",  # pyupgrade: modernized patterns (i.e. f-strings instead of .format())
-    "B",   # flake8-bugbear: prevent typical pitfalls
-    "SIM", # flake8-simplify: simplification of code; reducing boilerplate
-    "I",   # isort: import sort
+  "E",   # pycodestyle: classic PEP8 Errors
+  "W",   # pycodestyle warnings: trailing whitespace, whitespace-only blank lines, ...
+  "F",   # Pyflakes: unused imports and vars; undefined or double definitions
+  "UP",  # pyupgrade: modernized patterns (i.e. f-strings instead of .format())
+  "B",   # flake8-bugbear: prevent typical pitfalls
+  "SIM", # flake8-simplify: simplification of code; reducing boilerplate
+  "I",   # isort: import sort
 ]
 ignore = []
 
@@ -43,31 +44,31 @@ line-ending = "auto"   # Newline style, normalize mixed endings
 [tool.mypy]
 python_version = "3.13"
 strict = true
-pretty = true                               # human readable shell output 
+pretty = true                                                               # human readable shell output 
 show_error_codes = true
 files = ["."]
-exclude = ['^\.venv/', '^build/', '^dist/', '^apps/.*/tests/']
+exclude = ['^\.venv/', '^build/', '^dist/', '^apps/.*/tests/', '^scripts/']
 
 [tool.pyright]
-venvPath="."
-venv=".venv"
+venvPath = "."
+venv = ".venv"
 
 [tool.pytest.ini_options]
 minversion = "9.0"
 testpaths = [
-    "apps/backend_api/tests",
-    "apps/sync_service/tests",
-    "packages/connectors/tests",
+  "apps/backend_api/tests",
+  "apps/sync_service/tests",
+  "packages/connectors/tests",
 ]
 python_files = ["test_*.py"]
 addopts = [
-    "-ra", # show summary
-    "--strict-markers",
-    "--strict-config",
+  "-ra",              # show summary
+  "--strict-markers",
+  "--strict-config",
 ]
 markers = [
-    "unit: fast, isolated unit tests (no I/O)",
-    "io: tests that perform I/O (db, filesystem)",
+  "unit: fast, isolated unit tests (no I/O)",
+  "io: tests that perform I/O (db, filesystem)",
 ]
 
 [tool.coverage.run]

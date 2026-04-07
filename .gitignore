@@ -6,6 +6,9 @@ dist/
 wheels/
 *.egg-info
 
+# Script generated files
+raw_yt_data.json
+
 # Virtual environments
 .venv
 
