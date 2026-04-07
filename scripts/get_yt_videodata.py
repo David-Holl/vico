@@ -1,7 +1,7 @@
 import json
 import os
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 import requests
 from dotenv import load_dotenv
@@ -41,15 +41,25 @@ class Config:
         cls.API_KEY = key if key else ""
 
 
-def get_playlist_id(channel_id: str) -> str:
+def get_playlist_id(
+    channel_id: str, type: Literal["video", "short", "live", "all"] = "all"
+) -> str:
     if len(channel_id) != 24:
         raise ValueError("Channel ID must have 24 characters")
-    return channel_id.replace("C", "U", 1)
+    id = ""
+    match type:
+        case "all":
+            id = channel_id.replace("UC", "UU", 1)
+        case "short":
+            id = channel_id.replace("UC", "UUSH", 1)
+        case "video":
+            id = channel_id.replace("UC", "UULF", 1)
+        case "live":
+            id = channel_id.replace("UC", "UULV", 1)
+    return id
 
 
 def get_playlist_items(playlist_id: str, max_results: int = 50) -> dict[str, Any]:
-    if len(playlist_id) != 24:
-        raise ValueError("Channel ID must have 24 characters")
     if max_results > 50:
         raise ValueError("Pagination not implemented. Max Results: 50")
     PARAMS = {
@@ -59,7 +69,10 @@ def get_playlist_items(playlist_id: str, max_results: int = 50) -> dict[str, Any
         "key": Config.API_KEY,
     }
     response = requests.get(f"{Config.BASE_URL}/playlistItems", params=PARAMS)
-    response.raise_for_status()
+    if response.status_code == 404:
+        return dict()
+    else:
+        response.raise_for_status()
     return response.json()
 
 
@@ -78,6 +91,8 @@ def extract_video_id(response: dict[str, Any]) -> list[str]:
 
 
 def get_video_data(video_ids: list[str]) -> list[dict[str, Any]]:
+    if not video_ids:
+        return []
     PARAMS = {
         "part": [
             "snippet",
@@ -90,22 +105,37 @@ def get_video_data(video_ids: list[str]) -> list[dict[str, Any]]:
         "key": Config.API_KEY,
     }
     response = requests.get(f"{Config.BASE_URL}/videos", params=PARAMS)
-    response.raise_for_status()
+    if response.status_code == 404:
+        return []
+    else:
+        response.raise_for_status()
     return response.json().get("items", [])
 
 
 def main() -> None:
     Config.setup()
     youtube_videos: list[dict[str, Any]] = []
+    youtube_shorts: list[dict[str, Any]] = []
     for channel in Config.CHANNELS:
         channel_id = channel[1]
-        playlist_id = get_playlist_id(channel_id)
-        items = get_playlist_items(playlist_id)
-        videos = extract_video_id(items)
+        playlist_id_video = get_playlist_id(channel_id, "video")
+        playlist_id_short = get_playlist_id(channel_id, "short")
+        items_video = get_playlist_items(playlist_id_video)
+        items_short = get_playlist_items(playlist_id_short)
+        videos = extract_video_id(items_video)
+        shorts = extract_video_id(items_short)
         video_data = get_video_data(videos)
+        shorts_data = get_video_data(shorts)
         youtube_videos.extend(video_data)
+        youtube_shorts.extend(shorts_data)
     assert Config.JSON_DIR
-    with open(f"{Path.joinpath(Config.JSON_DIR, 'raw_yt_data.json')}", "w") as file:
+    with open(
+        f"{Path.joinpath(Config.JSON_DIR, 'raw_yt_data_shorts.json')}", "w"
+    ) as file:
+        json.dump(youtube_shorts, file, indent=4)
+    with open(
+        f"{Path.joinpath(Config.JSON_DIR, 'raw_yt_data_videos.json')}", "w"
+    ) as file:
         json.dump(youtube_videos, file, indent=4)
 
 

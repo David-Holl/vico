@@ -7,7 +7,7 @@ wheels/
 *.egg-info
 
 # Script generated files
-raw_yt_data.json
+raw_yt_data_*.json
 
 # Virtual environments
 .venv
