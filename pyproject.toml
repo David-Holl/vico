@@ -44,10 +44,10 @@ line-ending = "auto"   # Newline style, normalize mixed endings
 [tool.mypy]
 python_version = "3.13"
 strict = true
-pretty = true                                                               # human readable shell output 
+pretty = true                                                              # human readable shell output 
 show_error_codes = true
 files = ["."]
-exclude = ['^\.venv/', '^build/', '^dist/', '^apps/.*/tests/', '^scripts/']
+exclude = ['^\.venv/', '^build/', '^dist/', '.*/test_.*\.py', '^scripts/']
 
 [tool.pyright]
 venvPath = "."
@@ -59,6 +59,7 @@ testpaths = [
   "apps/backend_api/tests",
   "apps/sync_service/tests",
   "packages/connectors/tests",
+  "packages/shared/tests",
 ]
 python_files = ["test_*.py"]
 addopts = [
